@@ -1,23 +1,24 @@
 from tkinter import *
+from client.category import categoryClass
+class App:
+    def __init__(self,root):
+        self.root = root
+        self.root.title("Market Management System")
+        self.root.geometry("1350x700+0+0")
+        self.root.config(bg = "white")
+        # TITLE
+        head = Label(root, text='Market Management System', font=('times new roman', 30, 'bold'), bg='Red', fg='white', bd=10, relief = RIDGE).pack(fill =X)
+        btn_category = Button(text='Category',command=self.category,  padx=20, pady=10, font=('times new roman', 20, 'bold'))
+        btn_category.place(relx=0.04, rely=0.4, anchor="w")
 
-root = Tk()
+        btn_product = Button(text='Products', padx=20, pady=10, font=('times new roman', 20, 'bold'))
+        btn_product.place(relx=0.04, rely=0.6, anchor="w")
 
-root.title('Market Manager')
-root.geometry('1024x624')
+        btn_product = Button(text='Supplier', padx=20, pady=10, font=('times new roman', 20, 'bold'))
+        btn_product.place(relx=0.04, rely=0.8 , anchor="w")
 
-head = Label(root, text='Manager', font=('times new roman', 30, 'bold'), bg='DarkOrange1', fg='white', bd=10, relief=RIDGE)
-head.pack(fill=X)
+    def category(self):
+        self.new_win= Toplevel(self.root)
+        self.new_obj= categoryClass(self.new_win)
 
-customer_details = LabelFrame(root, text='Customer Details', font=('arial', 15, 'bold'), bg='navy', fg='white', bd=6, relief= GROOVE)
-customer_details.pack(fill=X)
 
-customer_label = Label(customer_details, text='Name', font=("arial", 15, 'bold'), fg='white', bg='navy')
-customer_label.grid(row=0,column=0,padx=30)
-
-name_entry = Entry(customer_details, font=('arial', 10, 'bold'), fg= 'black', bg='white', bd= 2,  relief=GROOVE, width=18)
-name_entry.grid(row=0, column=1)
-
-accept_button = Button(customer_details, text='accept')
-accept_button.grid(row=0, column=2)
-
-root.mainloop()
