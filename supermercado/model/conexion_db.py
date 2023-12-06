@@ -1,10 +1,8 @@
 import oracledb
 
 class ConexionDB:
-    def init(self):
-        self.conexion = oracledb.connect(user = 'system',
-            password = 'Mondongo123',
-            dsn = 'localhost:1521/xe')
+    def __init__(self):
+        self.conexion = oracledb.connect( user= 'SYSTEM',password= '123456789',dsn= 'localhost:1521/orcl')
         self.cursor = self.conexion.cursor()
 
     def cerrar(self):
