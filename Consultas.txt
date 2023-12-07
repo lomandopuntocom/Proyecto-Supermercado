@@ -1,0 +1,52 @@
+// Consultas
+
+//ventas totales de productos
+
+SELECT pr.nombre AS nombre_producto, COUNT(dv.id_producto) AS cantidad_vendida, SUM(dv.cantidad * pr.precio) AS ingresos_totales
+FROM detalle_venta dv
+JOIN producto pr ON dv.id_producto = pr."id"
+GROUP BY pr.nombre;
+
+
+//productos con categorias y proveedores
+
+SELECT p.nombre AS nombre_producto, p.descripcion, p.precio, c.nombre AS nombre_categoria, pe.nombre AS nombre_proveedor
+FROM producto p
+JOIN categoria c ON p.id_categoria = c."id"
+JOIN proveedor pv ON p.id_proveedor = pv."id"
+JOIN persona pe ON pv.id_persona = pe."id";
+
+
+//inventario actual de productos
+
+SELECT pr.nombre AS nombre_producto, pr.descripcion, iv.stock, iv.fecha_ingreso
+FROM inventario iv
+JOIN producto pr ON iv.id_producto = pr."id";
+
+
+//proveedor con mayor cantidad de productos en el inventario
+
+SELECT pe.nombre AS nombre_proveedor, pe.email, pe.num_contacto
+FROM persona pe
+WHERE pe."id" = (
+    SELECT pv.id_persona
+    FROM proveedor pv
+    JOIN producto pr ON pv."id" = pr.id_proveedor
+    JOIN inventario iv ON pr."id" = iv.id_producto
+    GROUP BY pv.id_persona
+    ORDER BY SUM(iv.stock) DESC
+    FETCH FIRST 1 ROW ONLY
+);
+
+
+//obtener categoria con precio promedio mas alto de sus productos
+
+SELECT c.nombre AS nombre_categoria, c.descripcion
+FROM categoria c
+WHERE c."id" = (
+    SELECT pr.id_categoria
+    FROM producto pr
+    GROUP BY pr.id_categoria
+    ORDER BY AVG(pr.precio) DESC
+    FETCH FIRST 1 ROW ONLY
+);
