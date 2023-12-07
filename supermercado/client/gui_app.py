@@ -1,5 +1,6 @@
 from tkinter import *
 from client.category import categoryClass
+from client.product import productClass
 class App:
     def __init__(self,root):
         self.root = root
@@ -8,17 +9,23 @@ class App:
         self.root.config(bg = "white")
         # TITLE
         head = Label(root, text='Market Management System', font=('times new roman', 30, 'bold'), bg='Red', fg='white', bd=10, relief = RIDGE).pack(fill =X)
-        btn_category = Button(text='Category',command=self.category,  padx=20, pady=10, font=('times new roman', 20, 'bold'))
+        btn_category = Button(text='Categoría',command=self.category,  padx=20, pady=10, font=('times new roman', 20, 'bold'))
         btn_category.place(relx=0.04, rely=0.4, anchor="w")
 
-        btn_product = Button(text='Products', padx=20, pady=10, font=('times new roman', 20, 'bold'))
+        btn_product = Button(text='Producto',command= self.product, padx=20, pady=10, font=('times new roman', 20, 'bold'))
         btn_product.place(relx=0.04, rely=0.6, anchor="w")
 
-        btn_product = Button(text='Supplier', padx=20, pady=10, font=('times new roman', 20, 'bold'))
+        btn_product = Button(text='Proveedor', padx=20, pady=10, font=('times new roman', 20, 'bold'))
         btn_product.place(relx=0.04, rely=0.8 , anchor="w")
 
     def category(self):
         self.new_win= Toplevel(self.root)
         self.new_obj= categoryClass(self.new_win)
+
+    def product(self):
+        self.new_win= Toplevel(self.root)
+        self.new_obj= productClass(self.new_win)
+
+
 
 

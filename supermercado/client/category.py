@@ -1,5 +1,6 @@
 from tkinter import *
-
+from model.supermercado_queries import *
+#NO TOCAR NADA
 class categoryClass:
     def __init__(self,root):
         self.root = root
@@ -8,7 +9,6 @@ class categoryClass:
         self.root.config(bg = "white")
         self.root.focus_force()
         #=====Variables===
-        self.var_cat_id=StringVar()
         self.var_name=StringVar()
         self.var_desc=StringVar()
         #=====title===
@@ -17,9 +17,15 @@ class categoryClass:
         lbl_description= Label(self.root, text="Description:", font =("goudy old style", 18), bg="white").place(x=50, y =198)
         txt_name= Entry(self.root, textvariable=self.var_name, font =("goudy old style", 18), bg="white").place(x=230, y =120, width=300)
         txt_description= Entry(self.root, textvariable=self.var_desc, font =("goudy old style", 18), bg="white").place(x=230, y =200, width=300, height = 140)
-        btn_add= Button(self.root, text="ADD", font =("goudy old style", 15), cursor="hand2").place(x=230, y =350, width=150, height=30)
+        btn_add= Button(self.root, text="ADD",command= self.agregar_categoria ,font =("goudy old style", 15), cursor="hand2").place(x=230, y =350, width=150, height=30)
+
+    def agregar_categoria(self):
+        # Lógica para agregar la categoría
+        categoria = CategoriaDB(self.var_name.get(),  
+                                self.var_desc.get())
+        agregar_cat(categoria)
 
 if __name__=="__main__":
     root=Tk()
     obj=categoryClass(root)
-    root.mainloop() 
+    root.mainloop()
