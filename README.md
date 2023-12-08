@@ -28,6 +28,7 @@ Market Manager es un programa diseñado para facilitar la administración de una
 
 ## Previsualización de la Interfaz
 ![Interfaz Inicial](images/main.jpg)
+![Ventas](images/venta.jpg)
 ![Categorias](images/categoria.jpg)
 ![Productos](images/producto.jpg)
 ![Proveedor](images/proveedor.jpg)
