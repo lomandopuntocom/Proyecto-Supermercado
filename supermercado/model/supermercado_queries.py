@@ -165,28 +165,6 @@ def agregar_ventas(ventas):
     except Exception as e:
             messagebox.showerror("Error", f"Error al realizar la venta: {e}")
 
-def actualizar_inventario(id_producto, cantidad_vendida):
-    conexion = ConexionDB()
-    try:
-        sql_stock_actual = 'SELECT stock FROM inventario WHERE id_producto = :id_producto'
-        conexion.cursor.execute(sql_stock_actual, {'id_producto': id_producto})
-        stock_actual = conexion.cursor.fetchone()[0]
-
-        if stock_actual >= cantidad_vendida:
-            # Actualizar el stock
-            nuevo_stock = stock_actual - cantidad_vendida
-            sql_actualizar_stock = 'UPDATE inventario SET stock = :nuevo_stock WHERE id_producto = :id_producto'
-            conexion.cursor.execute(sql_actualizar_stock, {'nuevo_stock': nuevo_stock, 'id_producto': id_producto})
-            conexion.conexion.commit()
-        else:
-            raise Exception("Stock insuficiente")
-
-    except Exception as e:
-        conexion.conexion.rollback()
-        raise e  # Propagar la excepción para manejarla en un nivel superior
-    finally:
-        if conexion:
-            conexion.cerrar()
 
 def agregar_persona2(persona):
     conexion = ConexionDB()
@@ -197,7 +175,6 @@ def agregar_persona2(persona):
     try:
         conexion.cursor.execute(sql_insert_persona, {'nombre': persona.nombre, 'email': persona.email, 'num_contacto': persona.contacto, 'direccion': persona.direccion})
         conexion.conexion.commit()
-
         sql_get_last_id = 'SELECT persona_sec.CURRVAL FROM dual'
         conexion.cursor.execute(sql_get_last_id)
         id_persona = conexion.cursor.fetchone()[0]
@@ -211,31 +188,6 @@ def agregar_persona2(persona):
         messagebox.showerror(titulo, mensaje)
     finally:
         conexion.cerrar()
-
-
-def agregar_cliente(id_persona, conexion):
-    sql_insert_cliente = '''
-        INSERT INTO cliente ("id", id_persona)
-        VALUES (cliente_sec.NEXTVAL, :id_persona)
-    '''
-
-    try:
-        conexion.cursor.execute(sql_insert_cliente, {'id_persona': id_persona})
-        conexion.conexion.commit()
-
-        sql_get_last_id = 'SELECT cliente_sec.CURRVAL FROM dual'
-        conexion.cursor.execute(sql_get_last_id)
-        id_cliente = conexion.cursor.fetchone()[0]
-
-        return id_cliente  
-
-    except Exception as e:
-        conexion.conexion.rollback()
-        titulo = 'Conexion a la base de datos'
-        mensaje = f'No se pudo agregar el cliente: {e}'
-        messagebox.showerror(titulo, mensaje)
-        return None
-
 
 class Nota_VentaDB:
     def __init__(self, fecha, monto, metodo_pago):  
