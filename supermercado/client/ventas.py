@@ -9,13 +9,13 @@ class ventasClass:
         self.root.config(bg = "white")
         self.root.focus_force()
         #=====Variables===
-        self.var_fecha=StringVar()
-        self.var_monto=StringVar()
-        self.var_metodo_pago=StringVar()
         self.var_name=StringVar() 
         self.var_email=StringVar()
         self.var_contacto=StringVar()
         self.var_direccion=StringVar() 
+        self.var_fecha=StringVar()
+        self.var_monto=StringVar()
+        self.var_metodo_pago=StringVar()
         #=====title===
         lbl_title= Label(self.root, text="Datos de Venta", font =("goudy old style", 30), bg="#184a45", fg="white", bd=3, relief=RIDGE).pack(side=TOP, fill=X)
         lbl_title_cliente= Label(self.root, text="Datos del Cliente:", font =("goudy old style", 22), fg="black").place(x=50, y=60)
@@ -38,12 +38,15 @@ class ventasClass:
         btn_add= Button(self.root, text="ADD",command= self.agregar_proveedor ,font =("goudy old style", 15), cursor="hand2").place(x=230, y =450, width=300, height=30)
 
     def agregar_ventas(self):
-        persona = PersonaDB(self.var_name.get(),  
+        ventas = VentasDB(self.var_name.get(),  
                                 self.var_email.get(), 
                                 self.var_contacto.get(),
-                                self.var_direccion.get())
+                                self.var_direccion.get(),
+                                self.var_fecha.get(),
+                                self.var_monto.get(),
+                                self.var_metodo_pago.get())
 
-        agregar_persona(persona)
+        agregar_ventas(ventas)
         
 
 if __name__=="__main__":

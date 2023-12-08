@@ -137,4 +137,10 @@ def agregar_proveedor(id_persona, conexion):
         mensaje = 'No se pudo agregar el proveedor: ' + str(e)
         messagebox.showerror(titulo, mensaje)
 
+class PersonaDB:
+    def __init__(self, nombre, email, contacto, direccion):  
+        self.nombre = nombre
+        self.email = email
+        self.contacto = contacto
+        self.direccion=direccion
 
