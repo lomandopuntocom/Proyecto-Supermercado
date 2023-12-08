@@ -201,7 +201,8 @@ Si el programa se ejecuta como principal
 
 Fin
 
-
+## Uso:
+Al ingresar desde la terminar, ejecutar app.py.
 
 ## Licencia
 'OracleDB'
