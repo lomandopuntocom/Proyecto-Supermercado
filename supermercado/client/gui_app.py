@@ -1,6 +1,7 @@
 from tkinter import *
-from client.category import categoryClass
-from client.product import productClass
+from client.categoria import categoryClass
+from client.producto import productClass
+from client.proveedor import proveedorClass
 class App:
     def __init__(self,root):
         self.root = root
@@ -15,7 +16,7 @@ class App:
         btn_product = Button(text='Producto',command= self.product, padx=20, pady=10, font=('times new roman', 20, 'bold'))
         btn_product.place(relx=0.04, rely=0.6, anchor="w")
 
-        btn_product = Button(text='Proveedor', padx=20, pady=10, font=('times new roman', 20, 'bold'))
+        btn_product = Button(text='Proveedor', command= self.proveedor, padx=20, pady=10, font=('times new roman', 20, 'bold'))
         btn_product.place(relx=0.04, rely=0.8 , anchor="w")
 
     def category(self):
@@ -25,6 +26,11 @@ class App:
     def product(self):
         self.new_win= Toplevel(self.root)
         self.new_obj= productClass(self.new_win)
+
+    def proveedor(self):
+        self.new_win= Toplevel(self.root)
+        self.new_obj= proveedorClass(self.new_win)
+
 
 
 
