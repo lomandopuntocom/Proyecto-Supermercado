@@ -17,9 +17,9 @@ class productClass:
         self.var_stock=StringVar()
         self.var_fecha_ingreso=StringVar()
         #=====title===
-        lbl_title= Label(self.root, text="Manage Product Category", font =("goudy old style", 30), bg="#184a45", fg="white", bd=3, relief=RIDGE).pack(side=TOP, fill=X)
-        lbl_name= Label(self.root, text="Product Name:", font =("goudy old style", 18), bg="white").place(x=50, y =118)
-        lbl_description= Label(self.root, text="Description:", font =("goudy old style", 18), bg="white").place(x=50, y =180)
+        lbl_title= Label(self.root, text="Market Manager Producto", font =("goudy old style", 30), bg="#184a45", fg="white", bd=3, relief=RIDGE).pack(side=TOP, fill=X)
+        lbl_name= Label(self.root, text="Nombre:", font =("goudy old style", 18), bg="white").place(x=50, y =118)
+        lbl_description= Label(self.root, text="Descripciónn:", font =("goudy old style", 18), bg="white").place(x=50, y =180)
         lbl_precio= Label(self.root, text="Precio:", font =("goudy old style", 18), bg="white").place(x=50, y =350)
         lbl_id_proveedor= Label(self.root, text="ID Proveedor:", font =("goudy old style", 18), bg="white").place(x=50, y =400)
         lbl_id_categoria= Label(self.root, text="ID Categoría:", font =("goudy old style", 18), bg="white").place(x=305, y =400)

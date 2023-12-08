@@ -37,5 +37,5 @@ class proveedorClass:
 
 if __name__=="__main__":
     root=Tk()
-    obj=productClass(root)
+    obj=proveedorClass(root)
     root.mainloop()
