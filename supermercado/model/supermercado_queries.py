@@ -137,10 +137,165 @@ def agregar_proveedor(id_persona, conexion):
         mensaje = 'No se pudo agregar el proveedor: ' + str(e)
         messagebox.showerror(titulo, mensaje)
 
-class PersonaDB:
-    def __init__(self, nombre, email, contacto, direccion):  
+class VentasDB:
+    def __init__(self, nombre, email, contacto, direccion, fecha, monto, metodo_pago):  
         self.nombre = nombre
         self.email = email
         self.contacto = contacto
-        self.direccion=direccion
+        self.direccion = direccion
+        self.fecha = fecha
+        self.monto = monto
+        self.metodo_pago = metodo_pago
+
+def agregar_ventas(ventas):
+    conexion = ConexionDB()
+    try:
+            cliente = PersonaDB(nombre_cliente, email_cliente, contacto_cliente, direccion_cliente)
+            agregar_persona(cliente)
+
+            # Registrar venta en la base de datos
+            # Aquí necesitarías una función para agregar la venta
+            # agregar_venta(id_cliente, id_producto, cantidad_vendida, otros detalles de la venta)
+
+            # Actualizar inventario
+            actualizar_inventario(id_producto, cantidad_vendida)
+
+            messagebox.showinfo("Éxito", "Venta realizada y stock actualizado")
+
+    except Exception as e:
+            messagebox.showerror("Error", f"Error al realizar la venta: {e}")
+
+def actualizar_inventario(id_producto, cantidad_vendida):
+    conexion = ConexionDB()
+    try:
+        sql_stock_actual = 'SELECT stock FROM inventario WHERE id_producto = :id_producto'
+        conexion.cursor.execute(sql_stock_actual, {'id_producto': id_producto})
+        stock_actual = conexion.cursor.fetchone()[0]
+
+        if stock_actual >= cantidad_vendida:
+            # Actualizar el stock
+            nuevo_stock = stock_actual - cantidad_vendida
+            sql_actualizar_stock = 'UPDATE inventario SET stock = :nuevo_stock WHERE id_producto = :id_producto'
+            conexion.cursor.execute(sql_actualizar_stock, {'nuevo_stock': nuevo_stock, 'id_producto': id_producto})
+            conexion.conexion.commit()
+        else:
+            raise Exception("Stock insuficiente")
+
+    except Exception as e:
+        conexion.conexion.rollback()
+        raise e  # Propagar la excepción para manejarla en un nivel superior
+    finally:
+        if conexion:
+            conexion.cerrar()
+
+def agregar_persona2(persona):
+    conexion = ConexionDB()
+    sql_insert_persona = '''
+        INSERT INTO persona ("id", nombre, email, num_contacto, direccion)
+        VALUES (persona_sec.NEXTVAL, :nombre, :email, :num_contacto, :direccion)
+    '''
+    try:
+        conexion.cursor.execute(sql_insert_persona, {'nombre': persona.nombre, 'email': persona.email, 'num_contacto': persona.contacto, 'direccion': persona.direccion})
+        conexion.conexion.commit()
+
+        sql_get_last_id = 'SELECT persona_sec.CURRVAL FROM dual'
+        conexion.cursor.execute(sql_get_last_id)
+        id_persona = conexion.cursor.fetchone()[0]
+
+        agregar_cliente(id_persona, conexion)
+
+    except Exception as e:
+        conexion.conexion.rollback()
+        titulo = 'Conexion a la base de datos'
+        mensaje = 'No se pudo agregar a la persona: ' + str(e)
+        messagebox.showerror(titulo, mensaje)
+    finally:
+        conexion.cerrar()
+
+
+def agregar_cliente(id_persona, conexion):
+    sql_insert_cliente = '''
+        INSERT INTO cliente ("id", id_persona)
+        VALUES (cliente_sec.NEXTVAL, :id_persona)
+    '''
+
+    try:
+        conexion.cursor.execute(sql_insert_cliente, {'id_persona': id_persona})
+        conexion.conexion.commit()
+
+        sql_get_last_id = 'SELECT cliente_sec.CURRVAL FROM dual'
+        conexion.cursor.execute(sql_get_last_id)
+        id_cliente = conexion.cursor.fetchone()[0]
+
+        return id_cliente  
+
+    except Exception as e:
+        conexion.conexion.rollback()
+        titulo = 'Conexion a la base de datos'
+        mensaje = f'No se pudo agregar el cliente: {e}'
+        messagebox.showerror(titulo, mensaje)
+        return None
+
+
+class Nota_VentaDB:
+    def __init__(self, fecha, monto, metodo_pago):  
+        self.fecha = fecha
+        self.monto = monto
+        self.metodo_pago = metodo_pago
+
+def agregar_nota_venta(nota_venta, id_cliente):
+    conexion = ConexionDB()
+    sql_insert_nota_venta = '''
+        INSERT INTO nota_venta ("id", fecha, monto, metodo_pago, id_cliente)
+        VALUES (nota_venta_sec.NEXTVAL, :fecha, :monto, :metodo_pago, :id_cliente)
+    '''
+    try:
+        conexion.cursor.execute(sql_insert_nota_venta, {'fecha': nota_venta.fecha, 'monto': nota_venta.monto, 'metodo_pago': nota_venta.metodo_pago, 'id_cliente': id_cliente})
+        conexion.conexion.commit()
+        sql_get_last_id = 'SELECT nota_venta_sec.CURRVAL FROM dual'
+        conexion.cursor.execute(sql_get_last_id)
+        id_nota_venta = conexion.cursor.fetchone()[0]
+        return id_nota_venta
+
+    except Exception as e:
+        conexion.conexion.rollback()
+        titulo = 'Conexion a la base de datos'
+        mensaje = f'No se pudo agregar la nota de venta: {e}'
+        messagebox.showerror(titulo, mensaje)
+        return None
+    finally:
+        conexion.cerrar()
+
+
+class Detalle_VentaDB:
+    def __init__(self, cantidad, id_producto):  
+        self.cantidad = cantidad
+        self.id_producto = id_producto
+
+def agregar_detalle_venta(detalle_venta, id_nota_venta):
+    conexion = ConexionDB()
+    sql_insert_detalle_venta = '''
+        INSERT INTO detalle_venta ("id", cantidad, id_producto, id_nota_venta)
+        VALUES (detalle_venta_sec.NEXTVAL, :cantidad, :id_producto, :id_nota_venta)
+    '''
+
+    try:
+        parametros = {
+            'cantidad': detalle_venta.cantidad,
+            'id_producto': detalle_venta.id_producto,
+            'id_nota_venta': id_nota_venta
+        }
+        conexion.cursor.execute(sql_insert_detalle_venta, parametros)
+        conexion.conexion.commit()
+
+    except Exception as e:
+        conexion.conexion.rollback()
+        titulo = 'Conexion a la base de datos'
+        mensaje = f'No se pudo agregar el detalle de venta: {e}'
+        messagebox.showerror(titulo, mensaje)
+    finally:
+        conexion.cerrar()
+
+
+
 

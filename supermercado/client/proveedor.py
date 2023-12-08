@@ -26,7 +26,6 @@ class proveedorClass:
         btn_add= Button(self.root, text="ADD",command= self.agregar_proveedor ,font =("goudy old style", 15), cursor="hand2").place(x=230, y =450, width=300, height=30)
 
     def agregar_proveedor(self):
-        # Lógica para agregar la categoría
         persona = PersonaDB(self.var_name.get(),  
                                 self.var_email.get(), 
                                 self.var_contacto.get(),
