@@ -28,6 +28,7 @@ Market Manager es un programa diseñado para facilitar la administración de una
 
 ## Previsualización de la Interfaz
 ![Interfaz Inicial](images/main.jpg)
+![Ventas](images/venta.jpg)
 ![Categorias](images/categoria.jpg)
 ![Productos](images/producto.jpg)
 ![Proveedor](images/proveedor.jpg)
@@ -50,41 +51,156 @@ gui_app:
     Función proveedor():
         Abrir nueva ventana para gestionar proveedores
 
-Categoria:
-- Clase categoryClass:
-    Función inicializar (root):
-        Configurar título, geometría y fondo de root
-        Definir variables para nombre y descripción de categoría
-        Crear y ubicar etiquetas y campos de entrada para nombre y descripción de la categoría
-        Crear y ubicar botón para añadir categoría
+Ventas:
+Inicio
 
-    Función agregar_categoria():
-        Crear un objeto CategoriaDB con los valores ingresados
-        Llamar a la función para agregar la categoría a la base de datos
+Importar módulos necesarios (Tkinter, supermercado_queries)
+
+Definir clase ventasClass
+    Inicializar la clase ventasClass
+        Configurar la ventana principal
+            - Título: "Market Management System"
+            - Geometría: 1100x500, posicionada en (220, 130)
+            - Color de fondo: blanco
+            - Establecer foco en la ventana
+
+        Definir variables (nombre, email, contacto, dirección, fecha, monto, método de pago)
+
+        Crear y posicionar elementos de la interfaz
+            - Título de la ventana
+            - Etiquetas para datos del cliente (nombre, email, contacto, dirección)
+            - Etiquetas para datos de la venta (fecha, monto, método de pago)
+            - Campos de entrada para cada dato
+            - Botón para agregar venta
+
+        Definir función agregar_ventas
+            - Crear objeto VentasDB con los datos ingresados
+            - Llamar a la función agregar_ventas para almacenar los datos en la base de datos
+
+Fin definición de clase ventasClass
+
+Si el programa se ejecuta como principal
+    Crear objeto Tk
+    Crear objeto ventasClass con la ventana Tk
+    Iniciar bucle principal de Tk
+
+Fin
+
+
+Categoria:
+Inicio
+
+Importar módulos necesarios (Tkinter, supermercado_queries)
+
+Definir clase categoryClass
+    Inicializar la clase categoryClass
+        Configurar la ventana principal
+            - Título: "Market Management System"
+            - Geometría: 1100x500, posicionada en (220, 130)
+            - Color de fondo: blanco
+            - Establecer foco en la ventana
+
+        Definir variables (nombre, descripción)
+
+        Crear y posicionar elementos de la interfaz
+            - Título de la ventana "Market Manager Categoría"
+            - Etiquetas y campos de entrada para:
+                - Nombre
+                - Descripción
+            - Botón para agregar categoría
+
+        Definir función agregar_categoria
+            - Crear objeto CategoriaDB con los datos ingresados
+            - Llamar a la función agregar_cat para almacenar los datos en la base de datos
+
+Fin definición de clase categoryClass
+
+Si el programa se ejecuta como principal
+    Crear objeto Tk
+    Crear objeto categoryClass con la ventana Tk
+    Iniciar bucle principal de Tk
+
+Fin
+
 
 Producto:
-- Clase productClass:
-    Función inicializar (root):
-        Configurar título, geometría y fondo de root
-        Definir variables para nombre, descripción, precio, id de categoría, id de proveedor, stock y fecha de ingreso de producto
-        Crear y ubicar etiquetas y campos de entrada para cada atributo del producto
-        Crear y ubicar botón para añadir producto
+Inicio
 
-    Función agregar_producto():
-        Crear un objeto ProductoDB con los valores ingresados
-        Llamar a la función para agregar el producto a la base de datos
+Importar módulos necesarios (Tkinter, supermercado_queries)
+
+Definir clase productClass
+    Inicializar la clase productClass
+        Configurar la ventana principal
+            - Título: "Market Management System"
+            - Geometría: 1100x500, posicionada en (220, 130)
+            - Color de fondo: blanco
+            - Establecer foco en la ventana
+
+        Definir variables (nombre, descripción, precio, id categoría, id proveedor, stock, fecha de ingreso)
+
+        Crear y posicionar elementos de la interfaz
+            - Título de la ventana "Market Manager Producto"
+            - Etiquetas y campos de entrada para:
+                - Nombre
+                - Descripción
+                - Precio
+                - ID Proveedor
+                - ID Categoría
+                - Stock
+                - Fecha de Ingreso
+            - Botón para agregar producto
+
+        Definir función agregar_producto
+            - Crear objeto ProductoDB con los datos ingresados
+            - Llamar a la función agregar_producto para almacenar los datos en la base de datos
+
+Fin definición de clase productClass
+
+Si el programa se ejecuta como principal
+    Crear objeto Tk
+    Crear objeto productClass con la ventana Tk
+    Iniciar bucle principal de Tk
+
+Fin
+
 
 Proveedor:
-- Clase proveedorClass:
-    Función inicializar (root):
-        Configurar título, geometría y fondo de root
-        Definir variables para nombre, email, contacto y dirección del proveedor
-        Crear y ubicar etiquetas y campos de entrada para cada atributo del proveedor
-        Crear y ubicar botón para añadir proveedor
+Inicio
 
-    Función agregar_proveedor():
-        Crear un objeto PersonaDB con los valores ingresados
-        Llamar a la función para agregar la persona como proveedor a la base de datos
+Importar módulos necesarios (Tkinter, supermercado_queries)
+
+Definir clase proveedorClass
+    Inicializar la clase proveedorClass
+        Configurar la ventana principal
+            - Título: "Market Management System"
+            - Geometría: 1100x500, posicionada en (220, 130)
+            - Color de fondo: blanco
+            - Establecer foco en la ventana
+
+        Definir variables (nombre, email, contacto, dirección)
+
+        Crear y posicionar elementos de la interfaz
+            - Título de la ventana "Datos del Proveedor"
+            - Etiquetas y campos de entrada para:
+                - Nombre
+                - Email
+                - Número de Contacto
+                - Dirección
+            - Botón para agregar proveedor
+
+        Definir función agregar_proveedor
+            - Crear objeto PersonaDB con los datos ingresados
+            - Llamar a la función agregar_persona para almacenar los datos en la base de datos
+
+Fin definición de clase proveedorClass
+
+Si el programa se ejecuta como principal
+    Crear objeto Tk
+    Crear objeto proveedorClass con la ventana Tk
+    Iniciar bucle principal de Tk
+
+Fin
+
 
 
 ## Licencia
